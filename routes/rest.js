@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
 
 //LET USER UPDATE DB INFO
 router.patch('/:id', getUser, async(req, res) => {
-    if (req.body.name != null) {
+    if (req.body != null) {
         res.found_user.name = req.body.name;
         res.found_user.surname = req.body.surname;
         res.found_user.dateJoined = req.body.dateJoined;
@@ -69,9 +69,6 @@ router.patch('/:id', getUser, async(req, res) => {
 })
 
 //LET USER DELETE SPECIFIC DATABASE INFO VIA SPECIFIED ID
-
-// TO BE DONE YET!!!!
-//  DOESN'T WORK, CAUSES A LOOP
 router.delete('/:id', getUser,async (req, res) => {
 
     try {
