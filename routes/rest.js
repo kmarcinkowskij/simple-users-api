@@ -17,6 +17,29 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/:name', getByName ,async (req, res) => {
+    try {
+        await res.json({
+            "message": 'found user[s]',
+            "amount": res.count_users_name,
+            "user[s] with that name": res.found_user_by_name
+        })
+    } catch(err) {
+        res.status(500).json({ message: err.message})
+    }
+})
+
+router.delete('/:name', getByName, async (req, res) => {
+    try {
+        // await res.json({ message: res.found_user_by_name })
+        await User.deleteOne({ name: req.params.name })
+                res.status(200).json({ message: 'User deleted successfully'})
+    }catch(err) {
+        res.status(500).json({ message: err.message})
+    }
+
+})
+
 //GET ONLY ONE WITH AN ID SPECIFIED BY THE USER
 router.get('/:id', getUser ,(req, res) => {
 
@@ -29,6 +52,7 @@ router.get('/:id', getUser ,(req, res) => {
         "gender": res.found_user.gender,
     })
 })
+
 
 //LET USER CREATE NEW DB INFO 
 router.post('/', async (req, res) => {
@@ -87,6 +111,24 @@ router.delete('/:id', getUser,async (req, res) => {
 })
 
 //FIXED, WORKS NOW
+
+async function getByName(req, res, next) {
+    let a_user_name;
+    let users_amount;
+    try {
+        a_user_name = await User.find({name: req.params.name})
+        users_amount = await User.count({name: req.params.name})
+        if (a_user_name == null) {
+            return res.status(404).json({message: 'User not found'})
+        }
+    } catch (err) { 
+        return res.status(500).json({message: err.message})
+    }
+
+    res.found_user_by_name = a_user_name
+    res.count_users_name = users_amount
+    next()
+}
 
 async function getUser(req, res, next) {
     let a_user;
