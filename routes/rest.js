@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
     }
 })
 
+//FILTER USERS BY NAME
 router.get('/:name', getByName ,async (req, res) => {
     try {
         await res.json({
@@ -29,6 +30,8 @@ router.get('/:name', getByName ,async (req, res) => {
     }
 })
 
+
+//DELETE USERS BY NAME
 router.delete('/:name', getByName, async (req, res) => {
     try {
         // await res.json({ message: res.found_user_by_name })
