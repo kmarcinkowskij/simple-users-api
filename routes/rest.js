@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const Tester = require("../models/rest_test")
-const { deleteOne, findById } = require('../models/rest_test')
+const User = require("../models/rest_user_model")
+const { deleteOne, findById } = require('../models/rest_user_model')
 // get all info 
 // get one
 // create info
@@ -11,27 +11,31 @@ const { deleteOne, findById } = require('../models/rest_test')
 //GET ALL POSSIBLE INFO 
 router.get('/', async (req, res) => {
     try {
-        const testers = await Tester.find()
-        res.json(testers)
+        const users = await User.find()
+        res.json(users)
     } catch (err){
         res.status(500).json({ message: err.message})
     }
 })
 
 //GET ONLY ONE WITH AN ID SPECIFIED BY THE USER
-router.get('/:id', getTester ,(req, res) => {
-    res.send(res.etester.name)
+router.get('/:id', getUser ,(req, res) => {
+    res.send(res.found_user.name)
 })
 
 //LET USER CREATE NEW DB INFO 
 router.post('/', async (req, res) => {
-    const atester = new Tester({
+    const a_user = new User({
         name: req.body.name,
+        surname: req.body.surname,
+        dateJoined: req.body.dateJoined,
+        premium: req.body.premium,
+
     })
 
     try{
-        const newTester = await atester.save()
-        res.status(201).json(newTester)
+        const newUser = await a_user.save()
+        res.status(201).json(newUser)
     } catch(err) {
         res.status(400).json({ message: err.message})
     }
@@ -39,14 +43,14 @@ router.post('/', async (req, res) => {
 
 
 //LET USER UPDATE DB INFO
-router.patch('/:id', getTester, async(req, res) => {
+router.patch('/:id', getUser, async(req, res) => {
     if (req.body.name != null) {
-        res.etester.name = req.body.name;
+        res.found_user.name = req.body.name;
     }
 
     try {
-        const updatedTester = await res.etester.save()
-        res.json(updatedTester)
+        const updatedUser = await res.found_user.save()
+        res.json(updatedUser)
     } catch(err) {
         res.status(400).json({ message: err.message})
     }
@@ -56,18 +60,18 @@ router.patch('/:id', getTester, async(req, res) => {
 
 // TO BE DONE YET!!!!
 //  DOESN'T WORK, CAUSES A LOOP
-router.delete('/:id', getTester,async (req, res) => {
+router.delete('/:id', getUser,async (req, res) => {
 
     try {
-        await res.etester.deleteOne({id: req.params.id})
-        res.send({message: 'deleted specified tester'})
+        await res.found_user.deleteOne({id: req.params.id})
+        res.send({message: 'deleted specified User'})
     }catch(err) {
         res.status(500).json({message: err.message})
     }
     // console.log(req.params.id)
     // try {
     //     let query = {id: req.params.id}
-    //     await Tester.deleteOne(query)
+    //     await User.deleteOne(query)
     // } catch (err){
     //     res.status(500).json({ message: err.message})
     // }
@@ -75,18 +79,18 @@ router.delete('/:id', getTester,async (req, res) => {
 
 //FIXED, WORKS NOW
 
-async function getTester(req, res, next) {
-    let atester;
+async function getUser(req, res, next) {
+    let a_user;
     try {
-        atester = await Tester.findById(req.params.id)
-        if (atester == null) {
-            return res.status(404).json({ message: 'Tester not found' })
+        a_user = await User.findById(req.params.id)
+        if (a_user == null) {
+            return res.status(404).json({ message: 'User not found' })
         }
     }catch(err) {
         return res.status(500).json({message: err.message})
     }
 
-    res.etester = atester
+    res.found_user = a_user
     next()
 }
 module.exports = router;

@@ -9,6 +9,9 @@ const mongoose = require('mongoose')
 
 const url = process.env.DATABASE_URL
 
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded({ extended: true }))
 
 const connectionParams={
 	useNewUrlParser: true,
@@ -36,7 +39,7 @@ app.listen(PORT, function(error){
 
 app.use(express.json())
 
-const restRouter = require('./routes/rest');
-app.use('/rest', restRouter)
+const usersRouter = require('./routes/rest');
+app.use('/users', usersRouter)
 
 
