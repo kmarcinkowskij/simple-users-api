@@ -54,6 +54,10 @@ router.post('/', async (req, res) => {
 router.patch('/:id', getUser, async(req, res) => {
     if (req.body.name != null) {
         res.found_user.name = req.body.name;
+        res.found_user.surname = req.body.surname;
+        res.found_user.dateJoined = req.body.dateJoined;
+        res.found_user.premium = req.body.premium;
+        res.found_user.gender = req.body.gender;
     }
 
     try {
