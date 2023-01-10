@@ -11,3 +11,5 @@ request  <br>
  <h2>devDependencies</h2>
   dotenv, <br>
   nodemon <br>
+
+<h3>Connection possible via an .ENV file (hence dotenv specified in devDependencies)</h3>
