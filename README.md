@@ -5,7 +5,7 @@ Supports adding/updating/removing users. In order for it all to work the followi
 <hr/>
 body-parser, <br>
 express,  <br>
-mongoose, <br>
+mongoose <br>
 
  <h2>devDependencies</h2>
   dotenv, <br>
