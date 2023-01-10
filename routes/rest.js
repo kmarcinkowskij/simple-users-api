@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const User = require("../models/rest_user_model")
-const { deleteOne, findById } = require('../models/rest_user_model')
 // get all info 
 // get one
 // create info
@@ -20,7 +19,15 @@ router.get('/', async (req, res) => {
 
 //GET ONLY ONE WITH AN ID SPECIFIED BY THE USER
 router.get('/:id', getUser ,(req, res) => {
-    res.send(res.found_user.name)
+
+    res.json({
+        message: "User Found",
+        "id": res.found_user.id,
+        "name": res.found_user.name,
+        "surname": res.found_user.surname,
+        "is premium?": res.found_user.premium,
+        "gender": res.found_user.gender,
+    })
 })
 
 //LET USER CREATE NEW DB INFO 
@@ -30,6 +37,7 @@ router.post('/', async (req, res) => {
         surname: req.body.surname,
         dateJoined: req.body.dateJoined,
         premium: req.body.premium,
+        gender: req.body.gender,
 
     })
 

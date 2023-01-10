@@ -9,6 +9,11 @@ const newSchema = new mongoose.Schema({
         type: String,
                 required: true,
     },
+    gender: {
+        type: String, 
+            required: true,
+            enum: ['M', 'F', 'NB'],
+    },
     dateJoined: {
         type: Date,
                 default: Date.now,
