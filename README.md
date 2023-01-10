@@ -6,10 +6,9 @@ Supports adding/updating/removing users. In order for it all to work the followi
 body-parser, <br>
 express,  <br>
 mongoose, <br>
-request  <br>
 
  <h2>devDependencies</h2>
   dotenv, <br>
   nodemon <br>
 
-<h3>Connection possible via an .ENV file (hence dotenv specified in devDependencies)</h3>
+<h3>Connection possible via an .ENV file (hence dotenv being specified in devDependencies)</h3>
